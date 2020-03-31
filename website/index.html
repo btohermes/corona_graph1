@@ -1,0 +1,149 @@
+﻿
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Cluster weighted Heat Map - Azure Maps Web SDK Samples</title>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="IE=Edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="This sample shows how to create a heat map that uses clustering on the data source to improve performance for large data sets. " />
+    <meta name="keywords" content="Microsoft maps, map, gis, API, SDK, heatmap, heat map, heatmaps, heat maps, density, layer, thermatic, clustering, superclusterer" />
+    <meta name="author" content="Microsoft Azure Maps" />
+
+    <!-- Add references to the Azure Maps Map control JavaScript and CSS files. -->
+    <link rel="stylesheet" href="https://atlas.microsoft.com/sdk/javascript/mapcontrol/2/atlas.min.css" type="text/css" />
+    <script src="https://atlas.microsoft.com/sdk/javascript/mapcontrol/2/atlas.min.js"></script>
+    <link href="style.css" rel="stylesheet">
+
+
+    <script type='text/javascript'>
+        var map, datasource;
+
+
+
+        function GetMap() {
+            //Initialize a map instance.
+            map = new atlas.Map('myMap', {
+                center: [-9.140637, 39.6],
+                zoom: 5.9,
+                maxZoom:12,
+                style: 'grayscale_dark',
+                view: 'Auto',
+
+				//Add your Azure Maps subscription key to the map SDK. Get an Azure Maps key at https://azure.com/maps
+                authOptions: {
+                    authType: 'subscriptionKey',
+                    subscriptionKey: 'Dk573Xl9wdgQc2-fITBOgKc1lYmhanF7aF6R2NpGwn8'
+                }
+            });
+
+
+
+            //Wait until the map resources are ready.
+            map.events.add('ready', function () {
+
+                //Create a data source and add it to the map.
+                datasource = new atlas.source.DataSource(null, {
+                    //Tell the data source to cluster point data.
+                    cluster: true,
+
+                    //The radius in pixels to cluster points together.
+                    clusterRadius: 5, // used to be 15, 5   
+
+                });
+                map.sources.add(datasource);
+
+                //Create a heatmap and add it to the map.
+                map.layers.add(new atlas.layer.HeatMapLayer(datasource, null, {
+                    //Set the weight to the point_count property of the data points.
+                    weight: ['get', 'point_count'],
+
+                    //color test
+                    color: [
+                        'interpolate',
+                        ['linear'],
+                        ['heatmap-density'],
+                        0, 'rgba(33,102,172,0)',
+                        0.2, 'RGB(224, 255, 255)',
+                        0.3, 'RGB(0, 255, 255)',
+                        0.4, 'RGB(127, 255, 212)',
+                        0.5, 'RGB(0, 255, 0)',
+                        0.8, 'RGB(255, 255, 0)',
+                        0.93, 'RGB(255, 165, 0)',
+                        0.97, 'RGB(255, 99, 71)',
+                        1, 'RGB(255, 69, 0)',
+                        
+                        //1, 'rgb(178,24,43)'
+                    ],
+
+                    //Optionally adjust the radius of each heat point.
+                    //radius: 50, // used to be 20, 20
+
+                    //radius test
+                    radius: [
+                        'step',
+                        ['get', 'point_count'],
+                        50,         //Default of 20 pixel radius.
+                        100, 20,    //If point_count >= 100, radius is 30 pixels.
+                        750, 5     //If point_count >= 750, radius is 40 pixels.
+                    ],
+
+                    intensity: 0.02,
+                    minZoom: 1,
+                    maxZoom: 18
+
+                }), 'labels');
+
+                //Load a data set of points, in this case earthquake data from the USGS.
+                //datasource.importDataFromUrl('https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_month.geojson');
+                //datasource.importDataFromUrl('https://stayalert.blob.core.windows.net/data/cases_map1_v12.geojson'); 
+                datasource.importDataFromUrl('map1_points_removed_v1.geojson'); 
+
+
+
+
+
+            });
+        }
+    </script>
+</head>
+<body>
+
+    <div class="title">
+        <div class="title_image">
+            <img alt="error" width="100%" src="LogoStayAlert.v5.png">
+        </div>
+        <div class="title_text">
+            This heat map represents the areas at risk of contagion from Covid-19. The risk zones are being calculated using a predictive model based on data from infected people, being monitored or suspected, as well as the mobility of the general population.
+        </div>
+    </div>
+
+
+    <div class="map">
+        <h1>Covid-19 Contagion Risk Map</h1><hr>
+        <body onload="GetMap()">
+            <div id="myMap" style="position:relative;width:100%;min-width:290px;height:600px;"></div>
+        </body>
+    </div>
+
+
+
+    <h1 class="title2">Powered by:<hr></h1>
+    <div class="reference">
+        <div class="reference_image">
+            <img alt="error" width="23%" src="CienciasLogo.png">
+            <img alt="error" width="40%" src="DSPA_Logo.png">
+            <img alt="error" width="23%" src="Closer_logo.png">
+        </div>
+        <div class="reference_text">
+            Disclaimer: StayAlert has a margin of error of 0.18%. We are working to obtain more up-to-date, real-time data in order to improve their accuracy. We stress that this project is based on a predictive model based on population mobility and confirmed infected data. The least likely areas are also areas of imminent contagion, so we call on all civil society to follow the recommendations of the DGS.
+        </div>
+    </div>
+
+    <footer>
+        Copyright © 2020 Stay Alert - All rights reserved.
+    </footer>
+
+</body>
+</html>

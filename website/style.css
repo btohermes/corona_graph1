@@ -1,0 +1,63 @@
+
+
+body {
+  margin:0px;
+}
+
+.title {
+  max-width: 100vh;
+  margin: 50px auto;
+}
+
+.title_image {
+  display: flex;
+  justify-content: center;
+  margin: 50px;
+}
+.title_text{
+  display: flex;
+  justify-content: center;
+  text-align: center;
+}
+
+.map{
+  max-width: 150vh;
+  margin: 50px auto 100px;
+}
+
+.title2{
+  max-width: 150vh;
+  margin: 50px auto 50px;
+}
+
+
+.reference{
+  width: 700px;
+  margin: 0px auto 20px;
+}
+
+.reference_image{
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 100px;
+}
+
+.reference_text{
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+footer {
+  height: 100px;
+  background-color: rgb(210, 47, 37);
+  color: aliceblue;
+  display: flex;
+  align-items: center;
+  text-align: left;
+  padding-left: 50px;
+}
+
+
+
