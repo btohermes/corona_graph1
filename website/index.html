@@ -1,6 +1,6 @@
 ﻿
 <!DOCTYPE html>
-<!–– lang="en">
+<html lang="en">
 <head>
     <title>Cluster weighted Heat Map - Azure Maps Web SDK Samples</title>
 
@@ -25,7 +25,7 @@
         function GetMap() {
             //Initialize a map instance.
             map = new atlas.Map('myMap', {
-                center: [-8.247, 39.6],
+                center: [-9.140637, 39.6],
                 zoom: 5.9,
                 maxZoom:12,
                 style: 'grayscale_dark',
@@ -97,24 +97,13 @@
 
                 //Load a data set of points, in this case earthquake data from the USGS.
                 //datasource.importDataFromUrl('https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_month.geojson');
-                //datasource.importDataFromUrl('https://stayalert.blob.core.windows.net/data/map1_points_removed_v1.geojson'); 
-                datasource.importDataFromUrl('map1_points_removed_v1.geojson');
-                //datasource.importDataFromUrl('map1_points_removed_v1_copy.csv');
-
-
-
-
+                //datasource.importDataFromUrl('https://stayalert.blob.core.windows.net/data/cases_map1_v12.geojson'); 
+                datasource.importDataFromUrl('map1_points_removed_v1.geojson'); 
+                //datasource.importDataFromUrl('map1_points_removed_v1_copy.csv'); 
             });
         }
     </script>
 </head>
-
-<body onload="GetMap()">
-    <div id="myMap" style="position:relative;width:100%;min-width:290px;height:600px;"></div>
-</body>
-
-
- <!--  
 <body>
 
     <div class="title">
@@ -153,5 +142,4 @@
     </footer>
 
 </body>
--->
 </html>
